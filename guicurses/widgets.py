@@ -554,7 +554,7 @@ multiple: whether to allow selecting multiple options
 		self.selections = default
 		self.pos = self.selections[0]
 		self.lastDraw = None
-#		self.draw()
+		self.draw()
 
 	def draw(self):
 		title = self.title
@@ -648,8 +648,8 @@ class fileBrowser(Listbox):
 		self.pos = 0
 		files = []
 		folders = []
-		folders.append((os.path.abspath(".."), "Back"))
 		os.chdir(self.dir)
+		self.back_directory = os.path.abspath("..")
 		for i in sorted(os.listdir(self.dir)):
 			if os.path.isdir(i):
 				folders.append((os.path.abspath(i), i))
@@ -667,7 +667,7 @@ class fileBrowser(Listbox):
 		self.lastDraw = None
 
 	def collapse(self):
-		self.dir = self.items[0][0]
+		self.dir = self.back_directory
 		self.items = self.make_list()
 		self.lastDraw = None
 
@@ -697,6 +697,8 @@ class fileBrowser(Listbox):
 		elif c in (10, 261, curses.KEY_RIGHT): # newline or right arrow
 			if os.path.isfile(self.getDir()) and self.select_type == "file":
 				self.done = 1
+				self.dir = self.getDir()
+				self.setStatus(self.dir)
 				return 1
 			if os.path.isdir(self.getDir()) and self.select_type != "file":
 				self.done = 1

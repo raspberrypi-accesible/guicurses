@@ -19,13 +19,10 @@ class Window(object):
 
 	def __init__(self, screen):
 		self.handlers=[self]
+		# Keys should be a dictionary of key: function.
 		self.keys = {}
 		self.statusbar=1
 		self.lastMessage=""
-		self.daemon=1
-		self.windows=[]
-		self.windowVars={}
-		self.windex=0
 		self.screen = screen
 		self.screen.nodelay(1)
 		self.screen.keypad(1)
@@ -35,8 +32,9 @@ class Window(object):
 		self.initVars()
 
 	def initVars(self):
+		# Counts how many times the loop has passed for the status bar.
+		self.status_counter = None
 		self.maxy,self.maxx=self.screen.getmaxyx()
-		self.curPos=[0,0]
 		self.status=self.maxy-1
 		self.entry=self.status-1
 		self.maxy=self.entry-1
@@ -61,13 +59,19 @@ class Window(object):
 			self.setStatus("error")
 		self.screen.move(cur[0],cur[1])
 		self.screen.refresh()
-
+		self.lastMessage = s
+		self.status_counter = 0
 		self.screen.refresh()
-
 
 	def run(self):
 		while 1:
 			time.sleep(0.01)
+			if self.status_counter != None:
+				if self.status_counter >= 10:
+					self.status_counter = None
+					self.setStatus(" "*self.maxx)
+				else:
+					self.status_counter += 1
 			c=self.screen.getch()
 			if c!=-1:
 				for handler in self.handlers[:]:
@@ -79,14 +83,14 @@ class Window(object):
 		if hasattr(handler, "selected_action"):
 			self.handlers.remove(handler)
 			getattr(self, handler.selected_action)(handler.dir)
-		elif not hasattr(handler, "controls"): return
-		for control in handler.controls:
-			if control.selected == 1 or control.done == 1:
-				self.handlers.remove(handler)
-				if "." in control.action:
-					self.open_file(control.action)
-				else:
-					getattr(self, control.action)()
+		elif hasattr(handler, "controls"):
+			for control in handler.controls:
+				if control.selected == 1 or control.done == 1:
+					self.handlers.remove(handler)
+					if "." in control.action:
+						self.open_file(control.action)
+					else:
+						getattr(self, control.action)()
 
 	def handleKey(self,k,*args):
 		pass

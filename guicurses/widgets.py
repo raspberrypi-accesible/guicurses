@@ -354,7 +354,7 @@ length: the maximum length for this text entry
 delimiter: the delimiter between prompt and text
 readonly: whether to accept new text
 """
-	def __init__(self, screen=None, base=None, y=0, x=0, history=[], prompt=u"input", default=u"", echo=None, maxLength=0, delimiter=u": ", readonly=0, action=""):
+	def __init__(self, screen=None, base=None, y=0, x=0, history=[], prompt=u"input", default=u"", echo=True, maxLength=0, delimiter=u": ", readonly=0, action=""):
 		self.value = default
 		self.done = 0
 		self.base = base

@@ -41,7 +41,7 @@ enter selects default button or displays error if not one
 		self.draw()
 
 	def initialDraw(self):
-		for i in xrange(0, len(self._controls)):
+		for i in range(0, len(self._controls)):
 			co = self._controls[i]
 			c = co[0](screen=self.screen, base=self.base, y=i, can_go_back=self.can_go_back, **co[1])
 			self.controls.append(c)
@@ -275,7 +275,7 @@ The following synonyms are supported where possible:
 		y, x = self.win.getyx()
 		l  =  len(self.text)
 		if l < self.maxy:
-			for i in xrange(l):
+			for i in range(l):
 				self.win.move(i, 0)
 				self.win.clrtoeol()
 				self.win.addstr(i, 0, ''.join(self.text[i]))

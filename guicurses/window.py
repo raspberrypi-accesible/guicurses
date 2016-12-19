@@ -1,7 +1,7 @@
 import sys
 import time
 import curses
-import widgets
+from . import widgets
 
 class Window(object):
 
@@ -11,8 +11,8 @@ class Window(object):
 			self.screen.keypad(0)
 			self.screen.nodelay(0)
 			curses.nocbreak()
-		except Exception,e:
-			print "error"
+		except Exception as e:
+			print("error")
 		sys.exit()
 
 	quit=exit

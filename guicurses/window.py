@@ -47,7 +47,6 @@ class Window(object):
 		if isinstance(txt,list): txt=",".join([str(i).strip() for i in txt])
 		if l: txt+=" "+" ".join(l)
 		if not isinstance(txt,str): txt=str(txt)
-		txt=txt.encode('utf-8')
 		cur=self.screen.getyx()
 		self.screen.move(self.status,0)
 		self.screen.clrtoeol()

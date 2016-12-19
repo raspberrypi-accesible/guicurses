@@ -426,12 +426,14 @@ readonly: whether to accept new text
 					self.ptr -= 1
 				else:
 					self.beepIfNeeded()
+				return 1
 			elif c in (6, 261):		# ^f, right arrow
 				if self.ptr<len(self.currentLine):
 					self.ptr += 1
 				else:
 					self.beepIfNeeded()
 					self.ptr = len(self.currentLine)
+				return 1
 			elif c  ==  259:		# Up arrow
 				if not self.history or self.historyPos == 0: #history will return non-zero if it has content
 					self.beepIfNeeded()
@@ -525,7 +527,7 @@ multiple: whether to allow selecting multiple options
 #if we've got a list of strings or a list of non-list objects, turn them into itemIndex,item
 #so ["a","b","c"] would become [[0,"a"],[1,"b"],[2,"c"]]
 		if items and type(items[0]) not in (tuple, list):
-			items = zip(xrange(len(items)),items)
+			items = zip(range(len(items)),items)
 		else:
 			items = items
 		items = [(i,str(j)) for i, j in items]
@@ -621,6 +623,34 @@ multiple: whether to allow selecting multiple options
 			return self.selections if self.multiple else self.pos
 		self.draw()
 
+
+class question(Listbox):
+
+	def handleKey(self, c):
+		if c == -1:
+			return None
+		if c == curses.KEY_UP:
+			if self.pos == 0:
+#we don't want to wrap around to the top
+				self.base.setStatus(self.title)
+				pass #self.pos = len(self.items)-1
+#				return 1
+			else:
+				self.pos -= 1
+		elif c == curses.KEY_DOWN:
+			if self.pos == len(self.items)-1:
+				self.setStatus(self.title) #self.pos = 0
+#				return 1
+			else:
+				self.pos += 1
+		elif c in (10, 261): # newline or right arrow
+			self.done = 1
+			return self.selections if self.multiple else self.pos
+		elif c == 260: # left arrow quietly back out
+			self.done = -1
+			return self.selections if self.multiple else self.pos
+		self.draw()
+
 class fileBrowser(Listbox):
 
 	def __init__(self, dir="./", select_type="file", action="", *args, **kwargs):
@@ -666,8 +696,10 @@ class fileBrowser(Listbox):
 				self.selections.remove(self.pos)
 			else:
 				self.selections.append(self.pos)
+			return 1
 		elif curses.ascii.isprint(c):
 			self.search(chr(c))
+			return 1
 		elif c == curses.KEY_UP:
 			if self.pos == 0:
 #we don't want to wrap around to the top
@@ -694,5 +726,6 @@ class fileBrowser(Listbox):
 			return 1
 		elif c == curses.KEY_LEFT or c == curses.KEY_BACKSPACE: # left arrow quietly back out
 			self.collapse()
+			return 1
 		self.draw()
 

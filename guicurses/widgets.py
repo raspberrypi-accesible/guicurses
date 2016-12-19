@@ -394,11 +394,11 @@ readonly: whether to accept new text
 			if ord(nc) in (194, 195):
 				nc  =  chr(self.screen.getch())
 				buf += nc
-			try:
-				tc  =  buf.decode()
-				done  =  True
-			except:
-				pass
+#			try:
+			tc  =  buf
+			done  =  True
+#			except:
+#				pass
 			return tc
 
 	def draw(self):
@@ -478,7 +478,7 @@ readonly: whether to accept new text
 					self.ptr = len(self.currentLine)
 				else:
 					self.setStatus("Something odd occured, readLine, down arrow")
-			elif c in (8, 263):		# ^H, backSpace
+			elif c in (8, curses.KEY_BACKSPACE, 263):		# ^H, backSpace
 				if self.ptr>0:
 					self.currentLine = u"%s%s" % (self.currentLine[:self.ptr-1],self.currentLine[self.ptr:])
 					self.ptr -= 1

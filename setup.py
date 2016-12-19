@@ -6,7 +6,7 @@ def read(fname):
 
 setup(
     name = "guicurses",
-    version = "0.4",
+    version = "0.5.1",
     author = "Manuel Cortez",
     author_email = "manuel@manuelcortez.net",
     description = "A set of utilities for building accessible applications with curses",

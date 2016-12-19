@@ -85,7 +85,7 @@ class Button(GuiObject):
 
 	def draw(self):
 		s =  self.prompt
-		self.screen.addstr(self.y, self.x, s.encode("utf-8"))
+		self.screen.addstr(self.y, self.x, s)
 		self.screen.refresh()
 
 	def handleKey(self, k):
@@ -354,7 +354,7 @@ length: the maximum length for this text entry
 delimiter: the delimiter between prompt and text
 readonly: whether to accept new text
 """
-	def __init__(self, screen=None, base=None, y=0, x=0, history=[], prompt=u"input", default=u"", echo=True, maxLength=0, delimiter=u": ", readonly=0, action=""):
+	def __init__(self, screen=None, base=None, y=0, x=0, history=[], prompt=u"input", default=u"", echo=False, maxLength=0, delimiter=u": ", readonly=0, action=""):
 		self.value = default
 		self.done = 0
 		self.base = base
@@ -493,7 +493,7 @@ readonly: whether to accept new text
 					if not self.insertMode:
 						self.currentLine[self.ptr] = uchar
 					else:
-						self.currentLine = u"%s%s%s" % (self.currentLine[:self.ptr],uchar,self.currentLine[self.ptr:])
+						self.currentLine = "%s%s%s" % (self.currentLine[:self.ptr],uchar,self.currentLine[self.ptr:])
 						self.ptr += 1
 						if self.maxLength>0 and self.ptr >=  self.maxLength:
 							if self.history != None and self.currentLine:

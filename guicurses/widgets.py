@@ -386,20 +386,7 @@ readonly: whether to accept new text
 	def externalEdit(self): return None
  
 	def getunicode(self, c):
-			tc  =  u' '
-			buf  =  ''
-			done  =  False
-			nc  =  chr(c)
-			buf += nc
-			if ord(nc) in (194, 195):
-				nc  =  chr(self.screen.getch())
-				buf += nc
-#			try:
-			tc  =  buf
-			done  =  True
-#			except:
-#				pass
-			return tc
+		return chr(c)
 
 	def draw(self):
 		d = self.ptr, self.currentLine

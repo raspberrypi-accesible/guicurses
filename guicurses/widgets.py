@@ -1,4 +1,4 @@
-#holds basic GUI structures for use in curses (treeview, listbox, checkbox, ETC)
+#holds basic GUI structures for use in curses (Dialog, button, editBox, readline, listbox and fileBrowser)
 # Taken and modified from http://bmcginty.us/clifox.git
 import curses, time, os, os.path, string, sys
 from curses import ascii
@@ -653,13 +653,15 @@ class question(Listbox):
 
 class fileBrowser(Listbox):
 
-	def __init__(self, dir="./", select_type="file", action="", *args, **kwargs):
+	def __init__(self, dir="./", select_type="file", action="", prev_items=[], extensions=None, *args, **kwargs):
 		self.select_type = select_type
 		self.selected_action = action
 		if dir:
 			self.dir = dir if dir else os.environ.get("HOME","/")
+		self.prev_items = prev_items
+		self.extensions = extensions
 		items = self.make_list()
-		super(fileBrowser, self).__init__(items=items, title="File browser", *args, **kwargs)
+		super(fileBrowser, self).__init__(items=items, *args, **kwargs)
 
 	def make_list(self):
 		self.pos = 0
@@ -667,10 +669,16 @@ class fileBrowser(Listbox):
 		folders = []
 		os.chdir(self.dir)
 		self.back_directory = os.path.abspath("..")
+		for i in self.prev_items:
+			folders.append((i, i))
 		for i in sorted(os.listdir(self.dir)):
 			if os.path.isdir(i):
 				folders.append((os.path.abspath(i), i))
 			else:
+				if self.extensions != None:
+					ext = i.split(".")[-1]
+					if ext not in self.extensions:
+						continue
 				files.append((os.path.abspath(i), i))
 		folders.extend(files)
 		return folders
@@ -714,7 +722,11 @@ class fileBrowser(Listbox):
 			else:
 				self.pos += 1
 		elif c in (10, 261, curses.KEY_RIGHT): # newline or right arrow
-			if os.path.isfile(self.getDir()) and self.select_type == "file":
+			if self.getDir() in self.prev_items:
+				self.done = 1
+				self.dir = self.getDir()
+				return 1
+			elif os.path.isfile(self.getDir()) and self.select_type == "file":
 				self.done = 1
 				self.dir = self.getDir()
 				self.setStatus(self.dir)

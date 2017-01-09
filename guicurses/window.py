@@ -79,7 +79,7 @@ class Window(object):
 						break
 
 	def check_changes(self, handler):
-		if hasattr(handler, "selected_action"):
+		if hasattr(handler, "selected_action") and handler.done == 1:
 			self.handlers.remove(handler)
 			getattr(self, handler.selected_action)(handler.dir)
 		elif hasattr(handler, "controls"):

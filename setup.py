@@ -12,7 +12,7 @@ setup(
     description = "A set of utilities for building accessible applications with curses",
     license = "GPL V2",
     keywords = "Gui curses accessibility speakup",
-    url = "http://manuelcortez.net:1337/pi/guicurses",
-    long_description=read('README'),
+    url = "https://github.com/raspberrypi-accesible/guicurses",
+    long_description=read('README.md'),
     packages = ["guicurses"],
 )

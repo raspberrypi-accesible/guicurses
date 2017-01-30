@@ -689,13 +689,13 @@ class fileBrowser(Listbox):
 	def expand(self):
 		self.dir = self.getDir()
 		self.items = self.make_list()
-#		self.lastDraw = None
+		self.lastDraw = None
 		self.draw()
 
 	def collapse(self):
 		self.dir = self.back_directory
 		self.items = self.make_list()
-#		self.lastDraw = None
+		self.lastDraw = None
 		self.draw()
 
 	def handleKey(self, c):

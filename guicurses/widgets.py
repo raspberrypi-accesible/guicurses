@@ -652,8 +652,7 @@ class fileBrowser(Listbox):
 	def __init__(self, dir="./", select_type="file", action="", prev_items=[], extensions=None, *args, **kwargs):
 		self.select_type = select_type
 		self.selected_action = action
-		if dir:
-			self.dir = dir if dir else os.environ.get("HOME","/")
+		self.dir = dir
 		self.prev_items = prev_items
 		self.extensions = extensions
 		items = self.make_list()

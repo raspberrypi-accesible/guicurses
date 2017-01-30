@@ -559,10 +559,6 @@ multiple: whether to allow selecting multiple options
 			self.screen.move(windowY, 0)
 			self.screen.clrtoeol()
 			self.screen.addstr(windowY, 0, title)
-			sep = '-'*len(title)
-			self.screen.move(windowY+1, 0)
-			self.screen.clrtoeol()
-			self.screen.addstr(windowY+1, 0, sep)
 			for idx, itm in enumerate(show):
 				self.screen.move(idx+sw, 0)
 				self.screen.clrtoeol()

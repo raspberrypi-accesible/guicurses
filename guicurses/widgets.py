@@ -649,12 +649,13 @@ class question(Listbox):
 
 class fileBrowser(Listbox):
 
-	def __init__(self, dir="./", select_type="file", action="", prev_items=[], extensions=None, *args, **kwargs):
+	def __init__(self, dir="./", select_type="file", action="", prev_items=[], extensions=None, hidden_files=False *args, **kwargs):
 		self.select_type = select_type
 		self.selected_action = action
 		self.dir = dir
 		self.prev_items = prev_items
 		self.extensions = extensions
+		self.hidden_files = hidden_files
 		items = self.make_list()
 		super(fileBrowser, self).__init__(items=items, *args, **kwargs)
 
@@ -667,6 +668,8 @@ class fileBrowser(Listbox):
 		for i in self.prev_items:
 			folders.append((i, i))
 		for i in sorted(os.listdir(self.dir)):
+			if i.startswith(".") and self.hidden_files == False:
+				continue
 			if os.path.isdir(i):
 				folders.append((os.path.abspath(i), i))
 			else:

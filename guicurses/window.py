@@ -1,8 +1,10 @@
 import sys
 import time
 import curses
+import signal
 from . import widgets
 
+s = signal.signal(signal.SIGINT, signal.SIG_IGN)
 class Window(object):
 
 	def exit(self,*a,**kw):

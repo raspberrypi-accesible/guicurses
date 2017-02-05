@@ -63,20 +63,23 @@ class Window(object):
 		self.screen.refresh()
 
 	def run(self):
-		while 1:
-			time.sleep(0.01)
-			if self.status_counter != None:
-				if self.status_counter >= 10:
-					self.status_counter = None
-					self.setStatus(" "*self.maxx)
-				else:
-					self.status_counter += 1
-			c=self.screen.getch()
-			if c!=-1:
-				for handler in self.handlers[:]:
-					if handler.handleKey(c):
-						self.check_changes(handler)
-						break
+		try:
+			while 1:
+				time.sleep(0.01)
+				if self.status_counter != None:
+					if self.status_counter >= 10:
+						self.status_counter = None
+						self.setStatus(" "*self.maxx)
+					else:
+						self.status_counter += 1
+				c=self.screen.getch()
+				if c!=-1:
+					for handler in self.handlers[:]:
+						if handler.handleKey(c):
+							self.check_changes(handler)
+							break
+		except KeyboardInterrupt:
+			pass
 
 	def check_changes(self, handler):
 		if hasattr(handler, "selected_action") and handler.done == 1:

@@ -102,6 +102,55 @@ class Button(GuiObject):
 			return 1
 		return None
 
+class comboBox(GuiObject):
+
+	def __init__(self, screen=None, base=None, y=1, x=0, options=[], default=None, help_string="", *args, **kwargs):
+		self.base = base
+		self.screen = screen
+		self.y, self.x = y, x
+		self.help_string = help_string
+		if default == None:
+			self.default = 0
+		else:
+			self.default = default
+		self.options = options
+		self.prompt = self.options[default][1]
+		self.selected_value = self.options[default][0]
+		self.selected = 0
+		self.draw()
+
+	def draw(self):
+		s =  " "+self.prompt
+		self.screen.addstr(self.y, self.x, s)
+		self.screen.refresh()
+
+	def handleKey(self, k):
+		if k == 10 or k == curses.KEY_RIGHT: # Enter key or right for easier use
+			self.change_value(1)
+			return 0
+		elif k == curses.KEY_F1:
+			if hasattr(self, "help_string"):
+				self.setStatus(self.help_string)
+				return 1
+		elif k == curses.KEY_LEFT:
+			self.change_value(-1)
+			return 0
+		return None
+
+	def change_value(self, number):
+		if number == 1:
+			if self.default < len(self.options)-1:
+				self.default += 1
+				self.prompt = self.options[self.default][1]
+				self.draw()
+				self.selected_value = self.options[self.default][0]
+		elif number == -1:
+			if self.default > 0:
+				self.default -= 1
+				self.prompt = self.options[self.default][1]
+				self.draw()
+				self.selected_value = self.options[self.default][0]
+
 class Editbox(object):
 	"""Editing widget using the interior of a window object.
 		Supports the following Emacs-like key bindings:
@@ -649,7 +698,7 @@ class question(Listbox):
 
 class fileBrowser(Listbox):
 
-	def __init__(self, dir="./", select_type="file", action="", prev_items=[], extensions=None, hidden_files=False *args, **kwargs):
+	def __init__(self, dir="./", select_type="file", action="", prev_items=[], extensions=None, hidden_files=False, *args, **kwargs):
 		self.select_type = select_type
 		self.selected_action = action
 		self.dir = dir

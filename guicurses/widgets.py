@@ -783,8 +783,9 @@ class fileBrowser(Listbox):
 			if os.path.isdir(self.getDir()) and self.select_type != "file":
 				self.done = 1
 				return 1
-			self.expand()
-			return 1
+			if os.path.isdir(self.getDir()):
+				self.expand()
+				return 1
 		elif c == curses.KEY_LEFT or c == curses.KEY_BACKSPACE: # left arrow quietly back out
 			self.collapse()
 			return 1

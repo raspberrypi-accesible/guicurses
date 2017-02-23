@@ -771,11 +771,11 @@ class fileBrowser(Listbox):
 			else:
 				self.pos += 1
 		elif c in (10, 261, curses.KEY_RIGHT): # newline or right arrow
-			if self.getDir() in self.prev_items:
+			if self.getDir() in self.prev_items and self.selected_action != "":
 				self.done = 1
 				self.dir = self.getDir()
 				return 1
-			elif os.path.isfile(self.getDir()) and self.select_type == "file":
+			elif os.path.isfile(self.getDir()) and self.select_type == "file" and self.selected_action != "":
 				self.done = 1
 				self.dir = self.getDir()
 				self.setStatus(self.dir)

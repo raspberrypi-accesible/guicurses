@@ -127,14 +127,14 @@ class comboBox(GuiObject):
 	def handleKey(self, k):
 		if k == 10 or k == curses.KEY_RIGHT: # Enter key or right for easier use
 			self.change_value(1)
-			return 0
+			return 1
 		elif k == curses.KEY_F1:
 			if hasattr(self, "help_string"):
 				self.setStatus(self.help_string)
 				return 1
 		elif k == curses.KEY_LEFT:
 			self.change_value(-1)
-			return 0
+			return 1
 		return None
 
 	def change_value(self, number):

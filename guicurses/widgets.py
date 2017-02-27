@@ -121,6 +121,7 @@ class comboBox(GuiObject):
 
 	def draw(self):
 		s =  " "+self.prompt
+		self.screen.clrtoeol()
 		self.screen.addstr(self.y, self.x, s)
 		self.screen.refresh()
 

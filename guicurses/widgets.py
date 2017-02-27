@@ -42,9 +42,9 @@ enter selects default button or displays error if not one
 		self.draw()
 
 	def initialDraw(self):
-		for i in range(1, len(self._controls)+1):
+		for i in range(0, len(self._controls)):
 			co = self._controls[i]
-			c = co[0](screen=self.screen, base=self.base, y=i, can_go_back=self.can_go_back, **co[1])
+			c = co[0](screen=self.screen, base=self.base, y=i+1, can_go_back=self.can_go_back, **co[1])
 			self.controls.append(c)
 		self.controlIndex = 0
 		self.screen.move(self.y, 0)

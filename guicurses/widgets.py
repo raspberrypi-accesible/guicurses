@@ -49,7 +49,7 @@ enter selects default button or displays error if not one
 		self.controlIndex = 0
 		self.screen.move(self.y, 0)
 		self.screen.clrtoeol()
-		self.screen.addstr(self.y, 0, title)
+		self.screen.addstr(self.y, 0, self.title)
 
 	def draw(self):
 		for i in self.controls:

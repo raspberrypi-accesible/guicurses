@@ -30,22 +30,26 @@ enter selects default button or displays error if not one
 		self.controls[self._controlIndex].onFocus()
 		return i
 
-	def __init__(self, screen = None, base = None, y = 0, x = 0, controls = [], can_go_back=True):
+	def __init__(self, screen = None, base = None, y = 0, x = 0, title="", controls = [], can_go_back=True):
 		self.base = base
 		self.screen = screen
 		self.y, self.x = y, x
 		self._controls = controls
 		self.controls = []
 		self.can_go_back = can_go_back
+		self.title = title
 		self.initialDraw()
 		self.draw()
 
 	def initialDraw(self):
-		for i in range(0, len(self._controls)):
+		for i in range(1, len(self._controls)+1):
 			co = self._controls[i]
 			c = co[0](screen=self.screen, base=self.base, y=i, can_go_back=self.can_go_back, **co[1])
 			self.controls.append(c)
 		self.controlIndex = 0
+		self.screen.move(self.y, 0)
+		self.screen.clrtoeol()
+		self.screen.addstr(self.y, 0, title)
 
 	def draw(self):
 		for i in self.controls:

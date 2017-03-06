@@ -763,7 +763,7 @@ class fileBrowser(Listbox):
 			return 1
 		elif curses.ascii.isprint(c):
 			self.search(chr(c))
-			return 1
+#			return 1
 		elif c == curses.KEY_UP:
 			if self.pos == 0:
 #we don't want to wrap around to the top

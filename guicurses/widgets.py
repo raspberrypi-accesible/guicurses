@@ -739,8 +739,8 @@ class fileBrowser(Listbox):
 		# If there are no files or directories, let's say "empty"
 		# This will avoid the program to crash and will look nicer.
 		if len(folders) == 0:
-			folders.append(("collapse", _("empty")))
-		if len(folders)
+			folders.append(("collapse", "empty"))
+		
 
 		return folders
 

@@ -56,7 +56,7 @@ enter selects default button or displays error if not one
 			i.draw()
 
 	def handleKey(self, c):
-		ret = 1
+		ret = 0
 		if c == curses.KEY_DOWN:
 			if self.controlIndex >= len(self.controls) -1:
 				self.beepIfNeeded()

@@ -33,6 +33,7 @@ enter selects default button or displays error if not one
 	def __init__(self, screen = None, base = None, y = 0, x = 0, title="", controls = [], can_go_back=True):
 		self.base = base
 		self.screen = screen
+		self.screen.move(0,0)
 		self.y, self.x = y, x
 		self._controls = controls
 		self.controls = []

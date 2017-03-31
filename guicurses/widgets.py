@@ -736,6 +736,12 @@ class fileBrowser(Listbox):
 						continue
 				files.append((os.path.abspath(i), i))
 		folders.extend(files)
+		# If there are no files or directories, let's say "empty"
+		# This will avoid the program to crash and will look nicer.
+		if len(folders) == 0:
+			folders.append(("collapse", _("empty")))
+		if len(folders)
+
 		return folders
 
 	def getDir(self):

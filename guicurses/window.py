@@ -26,6 +26,9 @@ class Window(object):
 		self.statusbar=1
 		self.lastMessage=""
 		self.screen = screen
+		# Makes the screen a bit bigger.
+		if curses.is_term_resized(100, 300):
+			curses.resizeterm(100, 300)
 		self.screen.nodelay(1)
 		self.screen.keypad(1)
 		curses.raw(1)

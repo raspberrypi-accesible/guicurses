@@ -26,6 +26,7 @@ class Window(object):
 		self.statusbar=1
 		self.lastMessage=""
 		self.screen = screen
+#		curses.resizeterm(100, 300)
 		self.screen.nodelay(1)
 		self.screen.keypad(1)
 		curses.raw(1)

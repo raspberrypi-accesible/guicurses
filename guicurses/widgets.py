@@ -90,6 +90,8 @@ class Button(GuiObject):
 
 	def draw(self):
 		s =  self.prompt
+		if len(s) > self.base.maxx:
+			s = s[:self.base.maxx-5]+"..."
 		self.screen.addstr(self.y, self.x, s)
 		self.screen.refresh()
 
